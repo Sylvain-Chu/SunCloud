@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">SunCloud</string>
+
+    <string-array name="sensor_array">
+        <item>Température</item>
+        <item>Humidité</item>
+        <item>Luminosité</item>
+        <item>UV</item>
+        <item>Infrarouge</item>
+        <item>Pression</item>
+    </string-array>
+
+    <string name="project_name">SunCloud IoT</string>
+    <string name="server_ip">Adresse IP du serveur</string>
+    <string name="server_port">Port du serveur</string>
+    <string name="choose_order">Choisissez l</string>
+    <string name="send_config">Envoyer la configuration</string>
+
 </resources>
+

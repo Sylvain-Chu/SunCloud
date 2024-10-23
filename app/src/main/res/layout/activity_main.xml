@@ -1,40 +1,121 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#E3F2FD"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choisissez quelle donnée envoyer"
-        android:textSize="18sp"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16dp">
+        android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/rbTemperature"
+        <!-- Affichage du logo -->
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:contentDescription="Logo du projet"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Affichage du nom du projet -->
+        <TextView
+            android:id="@+id/textProjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Température"/>
+            android:text="SunCloud IoT"
+            android:textColor="#FFEB3B"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
 
-        <RadioButton
-            android:id="@+id/rbHumidity"
+        <!-- Champ pour saisir l'adresse IP -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidité"/>
-    </RadioGroup>
+            android:textColor="#FFFFFF"
+            android:text="Adresse IP du serveur"/>
+        <EditText
+            android:id="@+id/etServerIP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B0BEC5"
+            android:hint="192.168.1.100"
+            android:inputType="text"/>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Envoyer l'ordre"
-        android:layout_marginTop="32dp"/>
-</LinearLayout>
+        <!-- Champ pour saisir le port -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Port du serveur"/>
+        <EditText
+            android:id="@+id/etServerPort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="10000"
+            android:text="10000"
+            android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/textViewOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choisissez l'ordre d'affichage"
+            android:layout_marginTop="16dp" />
+
+        <!-- Vos Spinners existants -->
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+        <Spinner
+            android:id="@+id/spinner4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+        <Spinner
+            android:id="@+id/spinner5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+        <Spinner
+            android:id="@+id/spinner6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sensor_array"/>
+
+
+        <Button
+            android:id="@+id/btnSendConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Envoyer la configuration"
+            android:backgroundTint="#FFEB3B"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"/>
+    </LinearLayout>
+</ScrollView>
