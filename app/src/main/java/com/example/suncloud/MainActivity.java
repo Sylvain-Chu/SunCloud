@@ -3,38 +3,69 @@ package com.example.suncloud;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
+    private RecyclerView recyclerView;
+    private SensorAdapter adapter;
+    private ArrayList<String> sensorList;
+
+    private DatagramSocket receiveSocket;
+    private Thread receiveThread;
+    private boolean isReceiving = false;
+
+    private TextView tvDataDisplay;
+
+    private EditText etServerIP;
+    private EditText etServerPort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText etServerIP = findViewById(R.id.etServerIP);
-        EditText etServerPort = findViewById(R.id.etServerPort);
+        // Initialisation des vues
+        etServerIP = findViewById(R.id.etServerIP);
+        etServerPort = findViewById(R.id.etServerPort);
+        tvDataDisplay = findViewById(R.id.tvDataDisplay);
 
-        Spinner spinner1 = findViewById(R.id.spinner1);
-        Spinner spinner2 = findViewById(R.id.spinner2);
-        Spinner spinner3 = findViewById(R.id.spinner3);
-        Spinner spinner4 = findViewById(R.id.spinner4);
-        Spinner spinner5 = findViewById(R.id.spinner5);
-        Spinner spinner6 = findViewById(R.id.spinner6);
+        // Initialisation de la liste des capteurs
+        sensorList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.sensor_array)));
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SensorAdapter(sensorList);
+        recyclerView.setAdapter(adapter);
+
+        // Configuration du drag-and-drop
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         Button btnSendConfig = findViewById(R.id.btnSendConfig);
         btnSendConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String serverIP = etServerIP.getText().toString();
                 String portString = etServerPort.getText().toString();
 
@@ -53,21 +84,48 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                // Démarrer le thread de réception si ce n'est pas déjà fait
+                if (!isReceiving) {
+                    startReceiving(port);
+                }
 
-                String order = "" + spinner1.getSelectedItem().toString().charAt(0) +
-                        spinner2.getSelectedItem().toString().charAt(0) +
-                        spinner3.getSelectedItem().toString().charAt(0) +
-                        spinner4.getSelectedItem().toString().charAt(0) +
-                        spinner5.getSelectedItem().toString().charAt(0) +
-                        spinner6.getSelectedItem().toString().charAt(0);
+                // Construction de la commande avec la première lettre de chaque capteur
+                StringBuilder orderBuilder = new StringBuilder();
+                for (String sensor : sensorList) {
+                    orderBuilder.append(sensor.charAt(0));
+                }
+                String order = orderBuilder.toString();
 
                 Log.d(TAG, "L'ordre à envoyer : " + order);
-
 
                 sendCommandToServer(serverIP, port, order);
             }
         });
     }
+
+    // Configuration du drag-and-drop
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView,
+                              RecyclerView.ViewHolder viewHolder,
+                              RecyclerView.ViewHolder target) {
+
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+
+            Collections.swap(sensorList, fromPosition, toPosition);
+            adapter.notifyItemMoved(fromPosition, toPosition);
+
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            // Pas d'action sur le swipe
+        }
+    };
 
     private void sendCommandToServer(final String serverIP, final int port, final String command) {
         Log.d(TAG, "Envoi de la commande au serveur : " + serverIP + ":" + port);
@@ -104,5 +162,62 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    private void startReceiving(final int port) {
+        Log.d(TAG, "Démarrage du thread de réception sur le port : " + port);
+        isReceiving = true;
+        receiveThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    receiveSocket = new DatagramSocket(port);
+                    Log.d(TAG, "Socket de réception initialisée sur le port : " + port);
+                    byte[] buffer = new byte[1024];
+                    while (isReceiving) {
+                        Log.d(TAG, "En attente de données...");
+                        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                        receiveSocket.receive(packet);
+                        Log.d(TAG, "Paquet reçu du serveur.");
+                        String receivedData = new String(packet.getData(), 0, packet.getLength());
+
+                        Log.d(TAG, "Données reçues du serveur : " + receivedData);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvDataDisplay.setText(receivedData);
+                                Log.d(TAG, "Données affichées à l'utilisateur.");
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Erreur lors de la réception des données", e);
+                } finally {
+                    if (receiveSocket != null && !receiveSocket.isClosed()) {
+                        receiveSocket.close();
+                        Log.d(TAG, "Socket de réception fermée.");
+                    }
+                }
+            }
+        });
+        receiveThread.start();
+        Log.d(TAG, "Thread de réception démarré.");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopReceiving();
+    }
+
+    private void stopReceiving() {
+        isReceiving = false;
+        if (receiveSocket != null && !receiveSocket.isClosed()) {
+            receiveSocket.close();
+        }
+        if (receiveThread != null && receiveThread.isAlive()) {
+            receiveThread.interrupt();
+        }
     }
 }

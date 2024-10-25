@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F2FD"
+    android:background="#E2E3DC"
     android:padding="16dp">
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SunCloud IoT"
-            android:textColor="#FFEB3B"
+            android:textColor="#20404C"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -37,13 +37,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
+            android:textColor="#20404C"
             android:text="Adresse IP du serveur"/>
         <EditText
             android:id="@+id/etServerIP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#B0BEC5"
+            android:textColor="#20404C"
+            android:textColorHint="#85C9DB"
             android:hint="192.168.1.100"
             android:inputType="text"/>
 
@@ -51,11 +52,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#20404C"
             android:text="Port du serveur"/>
         <EditText
             android:id="@+id/etServerPort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#20404C"
+            android:textColorHint="#85C9DB"
             android:hint="10000"
             android:text="10000"
             android:inputType="number"/>
@@ -64,54 +68,48 @@
             android:id="@+id/textViewOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#20404C"
             android:text="Choisissez l'ordre d'affichage"
             android:layout_marginTop="16dp" />
 
-        <!-- Vos Spinners existants -->
-        <Spinner
-            android:id="@+id/spinner1"
+        <!-- RecyclerView pour le drag-and-drop -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
+            android:minHeight="200dp"
+            android:layout_marginBottom="16dp"
+            android:scrollbars="vertical" />
 
-        <Spinner
-            android:id="@+id/spinner2"
+        <!-- Ajout des TextView pour afficher les données reçues -->
+        <TextView
+            android:id="@+id/tvReceivedDataLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Données reçues du serveur :"
+            android:textColor="#20404C"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvDataDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
-
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
-
-        <Spinner
-            android:id="@+id/spinner4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
-
-        <Spinner
-            android:id="@+id/spinner5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
-
-        <Spinner
-            android:id="@+id/spinner6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sensor_array"/>
-
+            android:textColor="#20404C"
+            android:textSize="16sp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:minHeight="100dp"
+            android:backgroundTint="#85C9DB"/>
 
         <Button
             android:id="@+id/btnSendConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Envoyer la configuration"
-            android:backgroundTint="#FFEB3B"
-            android:textColor="#000000"
+            android:backgroundTint="#E3AB11"
+            android:textColor="#20404C"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
             android:padding="12dp"
