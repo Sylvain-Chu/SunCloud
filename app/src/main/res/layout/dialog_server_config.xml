@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E2E3DC">
+
+    <!-- Titre du dialogue -->
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configurer le serveur"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#20404C"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Séparateur -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#85C9DB"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Champ pour saisir l'adresse IP -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#20404C"
+        android:text="Adresse IP du serveur"
+        android:textSize="16sp"
+        android:layout_marginBottom="4dp"/>
+    <EditText
+        android:id="@+id/etDialogServerIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#20404C"
+        android:textColorHint="#85C9DB"
+        android:hint="192.168.1.100"
+        android:inputType="text"
+        android:background="@drawable/edittext_background"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Champ pour saisir le port -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#20404C"
+        android:text="Port du serveur"
+        android:textSize="16sp"
+        android:layout_marginBottom="4dp"/>
+    <EditText
+        android:id="@+id/etDialogServerPort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#20404C"
+        android:textColorHint="#85C9DB"
+        android:hint="10000"
+        android:inputType="number"
+        android:background="@drawable/edittext_background"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#20404C"
+        android:text="Sélectionner l'écran"
+        android:textSize="16sp"
+        android:layout_marginBottom="4dp"/>
+    <Spinner
+        android:id="@+id/spinnerScreens"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_background"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"
+        android:spinnerMode="dropdown"
+        android:entries="@array/screens_array"/>
+
+</LinearLayout>

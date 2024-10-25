@@ -1,0 +1,8 @@
+<resources>
+
+    <string-array name="screens_array">
+        <item>Écran 1</item>
+        <item>Écran 2</item>
+        <item>Écran 3</item>
+    </string-array>
+</resources>

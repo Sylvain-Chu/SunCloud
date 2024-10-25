@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E2E3DC"
@@ -8,8 +9,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
+
+        <!-- Conteneur pour l'engrenage et le titre -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <!-- Bouton engrenage en haut à gauche -->
+            <ImageButton
+                android:id="@+id/btnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Configurer le serveur"
+                android:layout_alignParentStart="true"
+                app:tint="#20404C" />
+
+            <!-- Nom du projet centré -->
+            <TextView
+                android:id="@+id/textProjectName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SunCloud IoT"
+                android:textColor="#20404C"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
 
         <!-- Affichage du logo -->
         <ImageView
@@ -21,49 +51,7 @@
             android:contentDescription="Logo du projet"
             android:layout_marginBottom="16dp" />
 
-        <!-- Affichage du nom du projet -->
-        <TextView
-            android:id="@+id/textProjectName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SunCloud IoT"
-            android:textColor="#20404C"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Champ pour saisir l'adresse IP -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#20404C"
-            android:text="Adresse IP du serveur"/>
-        <EditText
-            android:id="@+id/etServerIP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#20404C"
-            android:textColorHint="#85C9DB"
-            android:hint="192.168.1.100"
-            android:inputType="text"/>
-
-        <!-- Champ pour saisir le port -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#20404C"
-            android:text="Port du serveur"/>
-        <EditText
-            android:id="@+id/etServerPort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#20404C"
-            android:textColorHint="#85C9DB"
-            android:hint="10000"
-            android:text="10000"
-            android:inputType="number"/>
-
+        <!-- TextView pour choisir l'ordre d'affichage -->
         <TextView
             android:id="@+id/textViewOrder"
             android:layout_width="wrap_content"
@@ -81,7 +69,7 @@
             android:layout_marginBottom="16dp"
             android:scrollbars="vertical" />
 
-        <!-- Ajout des TextView pour afficher les données reçues -->
+        <!-- TextView pour les données reçues -->
         <TextView
             android:id="@+id/tvReceivedDataLabel"
             android:layout_width="wrap_content"
@@ -103,6 +91,7 @@
             android:minHeight="100dp"
             android:backgroundTint="#85C9DB"/>
 
+        <!-- Bouton pour envoyer la configuration -->
         <Button
             android:id="@+id/btnSendConfig"
             android:layout_width="wrap_content"
