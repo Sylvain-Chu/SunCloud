@@ -59,7 +59,7 @@
             android:textColor="#20404C"
             android:text="Choisissez l'ordre d'affichage"
             android:layout_marginTop="16dp" />
-
+    
         <!-- RecyclerView pour le drag-and-drop -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

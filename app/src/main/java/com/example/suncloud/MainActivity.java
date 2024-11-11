@@ -2,7 +2,7 @@ package com.example.suncloud;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler; // Import pour le Handler
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Le message à envoyer périodiquement
-                String periodicMessage = "Requête de données";
+                //String periodicMessage = "";
 
-                sendCommandToServer(serverIP, serverPort, periodicMessage);
+                //sendCommandToServer(serverIP, serverPort, periodicMessage);
 
                 // Planifier le prochain envoi dans 5 secondes
-                handler.postDelayed(this, 5000);
+                //handler.postDelayed(this, 5000);
             }
         };
 
